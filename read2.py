@@ -1,6 +1,9 @@
+from pymongo import MongoClient
+
 sources = []
 metaedge = []
 target = []
+
 with open('sample_edges_1.tsv', 'r') as f:
 	next(f)
 	for line in f:	
@@ -12,11 +15,12 @@ with open('sample_edges_1.tsv', 'r') as f:
 	print(metaedge)
 	print(target)
 f.close
+
 id =[]
 name =[]
 kind=[]
 words_counter=2
-compounds = ['Gene','Anatomy','Compound','Disease']
+
 with open('sample_nodes_1.tsv', 'r') as f:
 	next(f)
 	for line in f:
@@ -37,4 +41,23 @@ with open('sample_nodes_1.tsv', 'r') as f:
 	print(id)
 	print(name)
 	print(kind)
-f.close	
+f.close
+
+
+client = MongoClient('localhost', 27017)
+
+db = client['mydb']
+
+col = db.create_collection(
+name= "nodes")
+
+nodes = db[ "nodes" ]
+
+list_counter = 0
+total = len(id)
+while list_counter < total:
+	result=nodes.insert_one({"name" : name[list_counter],"kind":kind[list_counter]})
+	
+	list_counter+=1
+
+print("created")
