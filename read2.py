@@ -11,9 +11,6 @@ with open('sample_edges_1.tsv', 'r') as f:
 		sources.append(words[0])
 		metaedge.append(words[1])
 		target.append(words[2])	
-	print(sources)
-	print(metaedge)
-	print(target)
 f.close
 
 id =[]
@@ -38,9 +35,6 @@ with open('sample_nodes_1.tsv', 'r') as f:
 		name.append(new_name)
 		id.append(words[0])
 		kind.append(words[-1])
-	print(id)
-	print(name)
-	print(kind)
 f.close
 
 
@@ -54,10 +48,17 @@ name= "nodes")
 nodes = db[ "nodes" ]
 
 list_counter = 0
-total = len(id)
+total = len(name)
+ids = []
+for item in id:
+	words = item.split(":")
+	ids.append(words[len(words)-1])
+print(id)
+print(ids)	
+
+
 while list_counter < total:
-	result=nodes.insert_one({"name" : name[list_counter],"kind":kind[list_counter]})
+	result=nodes.insert_one({"_id" : ids[list_counter],"name" : name[list_counter],"kind":kind[list_counter]})
 	
 	list_counter+=1
 
-print("created")
