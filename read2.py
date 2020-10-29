@@ -138,10 +138,18 @@ for items in treatment_ids:
 	list_of_queries = nodes.find(myquery)
 	for l in list_of_queries:
 		mydoc.append(l["name"])
-print(mydoc)
 ##################################################################
-#Query causes from Edges collection
+#Query occurs from Edges collection
 ##################################################################
+myquery = { "prof_id_source": disease,"metaedge" :"DlA"}
+mydoc = edges.find(myquery)
+occurance_ids = []
+for doc in mydoc:
+	occurance_ids.append(doc["target"])
 
-
-
+mydoc = []
+for items in occurance_ids:
+	myquery = {"id_source": items}
+	list_of_queries = nodes.find(myquery)
+	for l in list_of_queries:
+		mydoc.append(l["name"])
