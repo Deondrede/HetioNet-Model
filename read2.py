@@ -153,3 +153,17 @@ for items in occurance_ids:
 	list_of_queries = nodes.find(myquery)
 	for l in list_of_queries:
 		mydoc.append(l["name"])
+
+#I think this is right unless I completely misunderstood something
+myquery = { "prof_id_source": disease,"metaedge" :"DaG"}
+mydoc = edges.find(myquery)
+gene_ids = []
+for doc in mydoc:
+	gene_ids.append(doc["target"])
+
+mydoc = []
+for items in gene_ids:
+	myquery = {"id_source": items}
+	queries = nodes.find(myquery)
+	for l in queries:
+		mydoc.append(l["name"])
